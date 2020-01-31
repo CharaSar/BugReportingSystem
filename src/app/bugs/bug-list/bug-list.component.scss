@@ -1,0 +1,19 @@
+.mat-table {
+    width: 100%;
+}
+
+::ng-deep .mat-sort-header-arrow {
+    color: #f2f2f2 !important;
+}
+
+.mat-header-cell{
+    // font-weight: bold;
+    font-size: 15px;
+    background-color:#878f99;
+    color:#f2f2f2;	
+}
+
+.mat-raised-button{
+    background-color:#878f99;
+    color:#f2f2f2;	
+}

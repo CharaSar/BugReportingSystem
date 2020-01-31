@@ -1,0 +1,85 @@
+
+<!-- <div class="mat-elevation-z8" id="filters">
+  <form class="form">
+    <mat-form-field>
+      <input matInput type="text" (keyup)="applyFilter($event.target.value)" placeholder="Filter" (focus)="setUpFilter('title')" placeholder="Title">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="text" (keyup)="applyFilter($event.target.value)" placeholder="Filter" (focus)="setUpFilter('priority')" placeholder="Priority">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="text" (keyup)="applyFilter($event.target.value)" placeholder="Filter" (focus)="setUpFilter('reporter')" placeholder="Reporter">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="text" (keyup)="applyFilter($event.target.value)" placeholder="Filter" (focus)="setUpFilter('status')" placeholder="Status">
+    </mat-form-field>
+  </form>
+</div> -->
+
+<div>
+
+  <form [formGroup]="filterForm"class="form">
+    <mat-form-field>
+      <input matInput type="text"  formControlName="title" placeholder="Title">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="text" formControlName="priority" placeholder="Priority">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="text" formControlName="reporter" placeholder="Reporter">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput type="text" formControlName="status" placeholder="Status">
+    </mat-form-field>
+    <button mat-raised-button (click)="filteredSubmit()" color="primary">Submit</button>
+  </form>
+
+<mat-table matSort [dataSource]="dataSource" matSortActive="title" matSortDisableClear matSortDirection="asc" (matSortChange)="getPageableBugs()" class="mat-elevation-z8">
+
+  <ng-container  matColumnDef="position">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>No.</mat-header-cell>
+    <mat-cell *matCellDef="let element; let i = index">{{(pageSize * pageIndex)+i+1}}</mat-cell>
+  </ng-container>
+
+  <ng-container  matColumnDef="title">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Title</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{element.title}}</mat-cell>
+  </ng-container>
+
+  <ng-container  matColumnDef="priority">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Priority</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{element.priority}}</mat-cell>
+  </ng-container>
+
+  <ng-container  matColumnDef="reporter">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Reporter</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{element.reporter}}</mat-cell>
+  </ng-container>
+
+  <ng-container  matColumnDef="createdAt">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>CreatedAt</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{element.createdAt | date:"dd/MM/yyyy"}}</mat-cell>
+  </ng-container>
+
+  <ng-container  matColumnDef="status">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{element.status}}</mat-cell>
+  </ng-container>
+  
+  <ng-container  matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef>
+      <button mat-icon-button color="white" (click)="addNew()">
+        <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+      </button>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element;let i = index">
+      <button mat-raised-button (click)="edit(element.id)"><mat-icon aria-label="Edit">edit</mat-icon></button>
+      <button mat-raised-button (click)="deleteBug(element.id)"><mat-icon aria-label="Delete">delete</mat-icon></button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>
+<mat-paginator #paginator [length]="length" [pageIndex]="pageIndex"  [pageSize]="5" [pageSizeOptions]="[5, 10, 20]"  showFirstLastButtons (page)="getPageableBugs()"></mat-paginator>
+</div>
